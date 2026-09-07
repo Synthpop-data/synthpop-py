@@ -8,7 +8,7 @@ For most users, the recommended installation method is through PyPI. If you want
 
 synthpop-py requires:
 
-- Python 3.13 or later
+- Python 3.11 or later
 - `pip`
 
 We recommend installing synthpop-py in a virtual environment to keep dependencies isolated from other Python projects.
@@ -98,7 +98,7 @@ python -m pip install .
 ## Troubleshooting
 
 If you encounter installation problems:
-- Confirm that you are using Python 3.13 or newer.
+- Confirm that you are using Python 3.11 or newer.
 - Ensure your virtual environment is activated.
 - Check that `pip` is associated with the Python version you are using:
 ```bash
