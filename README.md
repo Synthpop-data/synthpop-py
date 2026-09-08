@@ -35,7 +35,7 @@ For a complete introduction to preparing data, configuring synthesis, generating
 ### Requirements
 
 synthpop-py requires:
-- **Python 3.13 or later**
+- **Python 3.11 or later**
 - **pandas 3.0.2 or later**
 - **scikit-learn 1.8.0 or later**
 - **plotly 6.5.2 or later**
