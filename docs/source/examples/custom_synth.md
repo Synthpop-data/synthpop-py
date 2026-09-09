@@ -45,7 +45,7 @@ The `fit` method is responsible for learning everything required to generate the
 - `X`: the predictor variables that are available when the target is synthesised. These may be `None` if the target has no predictors.
 - `y`: the original target variable that the method should learn to synthesise.
 
-As four our example, we will create a method that learns the mean of a numeric target and the mode of a categorical target:
+In our example, we will create a method that learns the mean of a numeric target and the mode of a categorical target:
 
 ```python
 from typing import Self
@@ -82,7 +82,7 @@ class CustomSynth(BaseSynthMethod):
 
 ```
 
-As you can, the first few lines store metadata about the input and the target. This is useful for two reasons:
+As you can see, the first few lines store metadata about the input and the target. This is useful for two reasons:
 1. **Compatibility with `scikit-learn`:** Similarly to creating [custom encoders](./custom_encoder.md), we aim to be `scikit-learn` compatible. `scikit-learn` estimators conventionally store information learned from the training data as attributes ending in `_`. For example, `self.feature_names_in_` and `self.n_samples_` should be defined. See the [`scikit-learn` documentation on custom estimators](https://scikit-learn.org/stable/developers/develop.html) for more information.
 2. **Preserving the target:** The target's name and dtype can be lost or changed during processing. Storing `target_name_` and `target_dtype_` allows the generated output to retain the same name and data type as the original target. This is important for compatibility with other parts of synthpop-py.
 
@@ -97,13 +97,13 @@ synth = CustomSynth()
 synth.fit(None, y)
 ```
 
-The learned value is stored is the most frequent value, `"30"`:
+The learned value that is stored in `value_` is the most frequent value: `"30"`:
 ```python
 print(synth.value_)
 # 30
 ```
 
-For a numeric target, the method instead learns the mean:
+For a numeric target, the method instead learns and stores the mean in `value_`:
 
 ```python
 y = pd.Series([20, 30, 30, 50], name='age', dtype='float')
@@ -281,7 +281,7 @@ from synthpop import Synthesiser
 
 synth = Synthesiser(
     special_syn_method={
-        "A": CustomSynth(),
+        "B": CustomSynth(),
     },
 )
 
@@ -316,16 +316,16 @@ When implementing a custom synthesis method, consider the following:
 
 8. **Support the data types required by your method.** If your algorithm requires numeric inputs, categorical encoding may be necessary. synthpop-py provides {class}`~synthpop.data_processing.encoders.MeanEncoder` and {class}`~synthpop.data_processing.encoders.PCAEncoder` fro this purpose. Again, you are free to implement your own custom encoder; see [Example: Custom Encoder](./custom_encoder.md).
 
-9. **Consider cloning behaviour.** If your synthesis method contains another estimator as a constructor parameter, ensure that it follows `scikit-learn`'s cloning conventions. IN particular, estimator parameters should be stored unchanged in `__init__` so that {class}`sklearn.base.clone` can recreate the estimator correctly.
+9. **Consider cloning behaviour.** If your synthesis method accepts another estimator as a constructor parameter, ensure that it follows `scikit-learn`'s cloning conventions. In particular, store estimator parameters unchanged in `__init__` so that {class}`sklearn.base.clone` can recreate the estimator correctly.
 
-10. **Test your estimator.** Since synthesis methods are built around `scikit-learn`'s conventions,testing fitted and unfitted states and other expected estimator behaviour can help identify compatibility issues early.
+10. **Test your estimator.** Because synthesis methods follow `scikit-learn` conventions, testing their fitted and unfitted states, as well as other expected estimator behaviour, can help identify compatibility issues early.
 
 ## Summary
 Custom synthesis methods in synthpop-py can be implemented by inheriting from {class}`~synthpop.methods.base_synth.BaseSynthMethod` and implementing the required `fit`, `transform`, and `get_feature_names_out` methods.
 
 The fit method learns the parameters required to synthesise a target variable, while transform uses those parameters to generate synthetic values. A synthesis method must support both cases where predictor variables are available and cases where there are no predictors.
 
-Once implemented, the method can be supplied to {class}`synthpop.synthesiser.Synthesiser` through `default_syn_method` or `special_syn_method`.
+Once implemented, the method can be supplied to {class}`~synthpop.synthesiser.Synthesiser` through `default_syn_method` or `special_syn_method`.
 
 The example in this guide deliberately uses a simple mean/mode strategy. In practice `CustomSynth` can be replaced by any synthesis algorithm that implements the {class}`~synthpop.methods.base_synth.BaseSynthMethod` interface.
 
