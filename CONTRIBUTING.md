@@ -145,7 +145,7 @@ For the full process for designing and implementing a new feature, see the [deve
 ### Contributing code
 
 #### Setting up your development environment
-synthpop-py uses [**Poetry**](https://python-poetry.org/docs/) to manage dependencies and the development enviroment.
+synthpop-py uses [**Poetry**](https://python-poetry.org/docs/) to manage dependencies and the development environment.
 
 We recommend installing Poetry using [**pipx**](https://pipx.pypa.io/stable/installation/#on-windows). You can check whether Poetry and pipx are installed by running the following commands in a terminal:
 ```bash
