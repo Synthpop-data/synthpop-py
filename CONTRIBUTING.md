@@ -158,10 +158,10 @@ Next, clone the [repository](https://github.com/duonl/synthpop-py.git):
 git clone https://github.com/duonl/synthpop-py.git
 ```
 
-Change into the repository directory and install the project together with the development and coumentation dependencies:
+Change into the repository directory and install the project together with the development and documentation dependencies:
 ```bash
 cd synthpop-py
-poetry install --with docs,dec
+poetry install --with docs,dev
 ```
 
 #### Development workflow
